@@ -11,6 +11,10 @@ class Todo extends Model
     /** @use HasFactory<\Database\Factories\TodoFactory> */
     use HasFactory;
 
+    protected $guarded = [];
+
+    protected $hidden = ['id', 'created_at', 'updated_at'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
