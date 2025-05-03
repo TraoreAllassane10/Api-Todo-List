@@ -11,6 +11,7 @@ Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('todos', TodoController::class);
+    Route::get('/user/{id}/todos', [TodoController::class, 'todos']);
 });
 
 Route::get('/user', function (Request $request) {
