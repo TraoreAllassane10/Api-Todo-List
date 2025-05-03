@@ -16,7 +16,9 @@ class TodoResource extends JsonResource
     {
         return [
             'title' => $this->title,
-            'description' => str()->words($this->description, 10)
+            'description' => str()->words($this->description, 10),
+            'category' => $this->category->name,
+            'author' => $this->user->name
         ];
     }
 }

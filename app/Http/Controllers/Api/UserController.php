@@ -14,8 +14,8 @@ class UserController extends Controller
     {
         $credentials = $request->validate([
             "name" => "required",
-            "email" => "required|email",
-            "password" => "password|min:4"
+            "email" => "required|email|unique:users,email",
+            "password" => "required|min:4"
         ]);
 
         try {
@@ -43,19 +43,26 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             "email" => "required|email",
-            "password" => "password|min:4"
+            "password" => "required|min:4"
         ]);
 
         try {
-            if (Auth::attempt($credentials)) {
-                $request->session()->regenerate();
+            if (Auth::attempt($request->only(['email', 'password']))) {
+
+                $user = auth()->user();
+
+                $token = $user->createToken('Cle')->plainTextToken;
+
 
                 return response()->json([
                     "status_code" => 200,
-                    "message" => "Utilisateur connecté"
+                    "message" => "Utilisateur connecté",
+                    "utilisateur" => $user,
+                    "token" => $token
                 ]);
+
             } else {
                 return response()->json([
                     "status_code" => 404,

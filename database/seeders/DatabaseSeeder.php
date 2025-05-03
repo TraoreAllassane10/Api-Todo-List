@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Todo;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,8 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Todo::factory(10)->create();
-
+        // Todo::factory(10)->create();
+        Category::factory(5)
+            ->has(Todo::factory()->count(3))
+            ->create();
         // User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',

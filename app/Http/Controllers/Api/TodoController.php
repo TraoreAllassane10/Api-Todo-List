@@ -15,10 +15,12 @@ class TodoController extends Controller
      */
     public function index()
     {
+        $todos = TodoResource::collection(Todo::all());
+
         return response()->json([
             'status_code' => 200,
             'status_message' => "Tache ajoutée",
-            'data' => Todo::all()
+            'data' => $todos
         ]);
     }
 
